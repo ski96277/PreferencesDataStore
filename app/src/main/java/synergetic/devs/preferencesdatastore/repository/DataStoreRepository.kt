@@ -9,11 +9,10 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import synergetic.devs.preferencesdatastore.BuildConfig
 import synergetic.devs.preferencesdatastore.StaticData
+import synergetic.devs.preferencesdatastore.modelClass.UserInfoClass
 import java.io.IOException
-
 //get package name
 const val  PREFERENCE_NAME= BuildConfig.APPLICATION_ID
-
 
 class DataStoreRepository(context:Context){
 
@@ -29,7 +28,8 @@ class DataStoreRepository(context:Context){
         }
     }
 
-    //read data to from data store
+
+    //read String data to from data store
     fun readStringFromDataStore(keyName: Preferences.Key<String>): Flow<String>  {
 
         return dataStore.data.catch { exception->
@@ -46,19 +46,5 @@ class DataStoreRepository(context:Context){
         }
     }
 
-
-    val readStringFromDataStore: Flow<String> = dataStore.data
-        .catch { exception->
-            if (exception is IOException){
-                Log.e("TAG", "Data Store: "+exception.message.toString() )
-                emit(emptyPreferences())
-            }else{
-                throw exception
-            }
-
-    }.map { preferance->
-        val myName:String = preferance[StaticData.name]?:"none"
-             myName
-        }
 
 }

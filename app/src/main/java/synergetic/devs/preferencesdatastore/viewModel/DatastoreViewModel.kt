@@ -9,13 +9,12 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
+import synergetic.devs.preferencesdatastore.modelClass.UserInfoClass
 import synergetic.devs.preferencesdatastore.repository.DataStoreRepository
 
-class MainViewModel(application: Application):AndroidViewModel(application) {
+class DatastoreViewModel(application: Application):AndroidViewModel(application) {
 
     private val repository=DataStoreRepository(application)
-
-    val readStringFromDataStore= repository.readStringFromDataStore.asLiveData()
 
     //save string to data base
     fun  saveStringToDataBaseStore(myNameValue: String, key: Preferences.Key<String>) = viewModelScope.launch(Dispatchers.IO){
@@ -25,6 +24,6 @@ class MainViewModel(application: Application):AndroidViewModel(application) {
         //read string to data base
     fun readStringFromDataStore(keName: Preferences.Key<String>): LiveData<String> {
        return repository.readStringFromDataStore(keName).asLiveData()
-
     }
+
 }

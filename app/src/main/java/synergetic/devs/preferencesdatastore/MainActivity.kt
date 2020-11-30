@@ -1,35 +1,60 @@
 package synergetic.devs.preferencesdatastore
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_main.*
-import synergetic.devs.preferencesdatastore.viewModel.MainViewModel
+import synergetic.devs.preferencesdatastore.modelClass.UserInfoClass
+import synergetic.devs.preferencesdatastore.viewModel.DatastoreViewModel
+import java.lang.Exception
 
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var mainViewModel: MainViewModel
+    private lateinit var datastoreViewModel: DatastoreViewModel
+    lateinit var userInfoClass: UserInfoClass
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         //init view model
-        mainViewModel=ViewModelProvider(this).get(MainViewModel::class.java)
+        datastoreViewModel=ViewModelProvider(this).get(DatastoreViewModel::class.java)
 //read string data to from data store
-        mainViewModel.readStringFromDataStore(StaticData.name).observe(this,{myName->
-
-            textView.text=myName
-
+        datastoreViewModel.readStringFromDataStore(StaticData.name).observe(this, { myName ->
+            textView.text = myName
         })
+
+        //read Object data to from data store
+        datastoreViewModel.readStringFromDataStore(StaticData.userInfo).observe(this, { userInfo ->
+
+            try {
+
+                val gson = Gson()
+                val obj: UserInfoClass = gson.fromJson(userInfo,UserInfoClass::class.java)
+                textView.append(obj.address.toString())
+
+            }catch (e:Exception){
+
+            }
+        })
+
+        userInfoClass= UserInfoClass(1, "Imran", "Mohammadpur")
+
+
 
         button.setOnClickListener {
             val myName=editTextTextPersonName.text.toString()
-            Toast.makeText(this,myName,Toast.LENGTH_SHORT).show()
+
             //save data to data store
-            mainViewModel.saveStringToDataBaseStore(myName,StaticData.name)
+            datastoreViewModel.saveStringToDataBaseStore(myName, StaticData.name)
+
+            //save object as a string
+            val gson = Gson()
+            val json = gson.toJson(userInfoClass)
+            datastoreViewModel.saveStringToDataBaseStore(json, StaticData.userInfo)
+
         }
 
     }
