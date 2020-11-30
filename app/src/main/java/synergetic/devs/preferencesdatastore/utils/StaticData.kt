@@ -1,4 +1,4 @@
-package synergetic.devs.preferencesdatastore
+package synergetic.devs.preferencesdatastore.utils
 
 import androidx.datastore.preferences.preferencesKey
 import synergetic.devs.preferencesdatastore.modelClass.UserInfoClass

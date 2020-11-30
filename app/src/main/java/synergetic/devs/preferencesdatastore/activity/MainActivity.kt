@@ -1,11 +1,13 @@
-package synergetic.devs.preferencesdatastore
+package synergetic.devs.preferencesdatastore.activity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_main.*
+import synergetic.devs.preferencesdatastore.R
 import synergetic.devs.preferencesdatastore.modelClass.UserInfoClass
+import synergetic.devs.preferencesdatastore.utils.StaticData
 import synergetic.devs.preferencesdatastore.viewModel.DatastoreViewModel
 import java.lang.Exception
 
@@ -40,7 +42,7 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
-        userInfoClass= UserInfoClass(1, "Imran", "Mohammadpur")
+        userInfoClass= UserInfoClass(1, "Imran", "Dhaka")
 
 
 

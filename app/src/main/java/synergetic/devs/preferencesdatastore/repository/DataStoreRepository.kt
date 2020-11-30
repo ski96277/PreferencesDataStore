@@ -8,8 +8,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import synergetic.devs.preferencesdatastore.BuildConfig
-import synergetic.devs.preferencesdatastore.StaticData
-import synergetic.devs.preferencesdatastore.modelClass.UserInfoClass
 import java.io.IOException
 //get package name
 const val  PREFERENCE_NAME= BuildConfig.APPLICATION_ID
